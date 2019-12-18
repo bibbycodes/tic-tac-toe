@@ -16,12 +16,10 @@ class Game
   def check_rows(player)
     layout = @board.layout
     piece = player.piece
-    if
-      layout['A'].values.all? { |x| x == piece } ||
-      layout['B'].values.all? { |x| x == piece } ||
-      layout['C'].values.all? { |x| x == piece }
-      player.name
-    end
+    row_a = layout['A'].values.all? { |x| x == piece }
+    row_b = layout['B'].values.all? { |x| x == piece }
+    row_c = layout['C'].values.all? { |x| x == piece }
+    return player.name if row_a || row_b || row_c
   end
 
   def check_columns(player)
