@@ -10,11 +10,14 @@ require 'board'
 
 describe Board do
   context 'adding a piece to the board' do
+    let(:player_x) { double('Player', name: 'Robert', piece: 'X') }
+    let(:player_o) { double('Player', name: 'Joseph', piece: 'O') }
+    let(:invalid_player) { double('Player', name: 'Thomas', piece: 'D') }
     before(:each) do
       @board = Board.new
     end
     it 'can add an X to the board at A 1' do
-      expect(@board.add('X', 'A1')).to eq([
+      expect(@board.add(player_x, 'A1')).to eq([
                                             { "1": 'X', "2": '', "3": '' },
                                             { "1": '',  "2": '', "3": '' },
                                             { "1": '',  "2": '', "3": '' }
@@ -22,7 +25,7 @@ describe Board do
     end
 
     it 'can add an O to the board at A 1' do
-      expect(@board.add('O', 'A1')).to eq([
+      expect(@board.add(player_o, 'A1')).to eq([
                                             { "1": 'O', "2": '', "3": '' },
                                             { "1": '',  "2": '', "3": '' },
                                             { "1": '',  "2": '', "3": '' }
@@ -30,7 +33,7 @@ describe Board do
     end
 
     it 'can add an X to the board at A 2' do
-      expect(@board.add('X', 'A2')).to eq([
+      expect(@board.add(player_x, 'A2')).to eq([
                                             { "1": '', "2": 'X', "3": '' },
                                             { "1": '', "2": '',  "3": '' },
                                             { "1": '', "2": '',  "3": '' }
@@ -38,7 +41,7 @@ describe Board do
     end
 
     it 'can add an O to the board at B 1' do
-      expect(@board.add('O', 'B1')).to eq([
+      expect(@board.add(player_o, 'B1')).to eq([
                                             { "1": '', "2": '',  "3": '' },
                                             { "1": 'O', "2": '', "3": '' },
                                             { "1": '',  "2": '', "3": '' }
@@ -46,7 +49,7 @@ describe Board do
     end
 
     it 'can add an X to the board at C 2' do
-      expect(@board.add('X', 'C2')).to eq([
+      expect(@board.add(player_x, 'C2')).to eq([
                                             { "1": '', "2": '',  "3": '' },
                                             { "1": '', "2": '',  "3": '' },
                                             { "1": '', "2": 'X', "3": '' }
@@ -54,8 +57,8 @@ describe Board do
     end
 
     it 'can add an O to the board at C 3 and then an X at A 1' do
-      @board.add('X', 'A1')
-      expect(@board.add('O', 'C3')).to eq([
+      @board.add(player_x, 'A1')
+      expect(@board.add(player_o, 'C3')).to eq([
                                             { "1": 'X', "2": '',  "3": '' },
                                             { "1": '',  "2": '',  "3": '' },
                                             { "1": '',  "2": '',  "3": 'O' }
@@ -64,32 +67,32 @@ describe Board do
 
     context 'validation' do
       it 'cannot add a piece to a spot that has been taken' do
-        @board.add('X', 'A1')
-        expect(@board.add('X', 'A1')).to eq('Invalid Move')
+        @board.add(player_x, 'A1')
+        expect(@board.add(player_x, 'A1')).to eq('Invalid Move')
       end
 
       it 'cannot add a piece other than X or O' do
-        expect(@board.add('D', 'A1')).to eq('Invalid Move')
+        expect(@board.add(invalid_player, 'A1')).to eq('Invalid Move')
       end
 
       it 'cannot add a piece to a spot outside the board' do
-        expect(@board.add('X', 'D4')).to eq('Invalid Move')
+        expect(@board.add(player_x, 'D4')).to eq('Invalid Move')
       end
     end
 
     context '#full?' do
       it 'returns true if the board is full' do
         (1..3).each do |i|
-          @board.add('X', "A#{i}")
-          @board.add('X', "B#{i}")
-          @board.add('X', "C#{i}")
+          @board.add(player_x, "A#{i}")
+          @board.add(player_x, "B#{i}")
+          @board.add(player_x, "C#{i}")
         end
         expect(@board.full?).to be(true)
       end
 
       it 'returns false if the board is not full' do
         (1..3).each do |i|
-          @board.add('X', "A#{i}")
+          @board.add(player_x, "A#{i}")
         end
         expect(@board.full?).to be(false)
       end

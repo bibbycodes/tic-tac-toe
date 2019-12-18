@@ -269,4 +269,9 @@ describe Game do
       expect(game.over?).to eq(false)
     end
   end
+
+  context '#switch_turns' do
+    # game = Game.new(empty_board)
+    
+  end
 end

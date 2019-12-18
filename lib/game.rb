@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Game
+  attr_accessor :board
+  attr_reader :winner
   def initialize(board)
     @board = board
     @winner = nil

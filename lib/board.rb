@@ -10,7 +10,8 @@ class Board
     }
   end
 
-  def add(piece, position)
+  def add(player, position)
+    piece = player.piece
     if validate_move(piece, position)
       row = position[0]
       column = position[1].to_sym
