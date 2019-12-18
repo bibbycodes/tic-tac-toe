@@ -20,6 +20,13 @@ class Board
     end
   end
 
+  def full?
+    a = @board['A'].values.all? {|x| x != ''}
+    b = @board['B'].values.all? {|x| x != ''}
+    c = @board['C'].values.all? {|x| x != ''}
+    return a && b && c
+  end
+
   private
 
   def validate_move(piece, position)
