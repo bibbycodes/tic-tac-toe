@@ -1,9 +1,19 @@
 class Game
-  def check_rows(layout, piece)
-    if layout['A'].values.all? {|x| x == piece} || layout['B'].values.all? {|x| x == piece} || layout['C'].values.all? {|x| x == piece} 
+
+  def winner?(layout, piece)
+    col = check_columns(layout, piece) == piece
+    row = check_rows(layout, piece) == piece
+    diag = check_diagonals(layout, piece) == piece
+    if col || row || diag
       return piece
-    else
-      return nil
+    end
+  end
+  def check_rows(layout, piece)
+    if  
+      layout['A'].values.all? {|x| x == piece} || 
+      layout['B'].values.all? {|x| x == piece} || 
+      layout['C'].values.all? {|x| x == piece} 
+      return piece
     end
   end
 
@@ -13,8 +23,6 @@ class Game
     col_3 = layout["A"][:"3"] == piece && layout["B"][:"3"] == piece && layout["C"][:"3"] == piece
     if col_1 || col_2 || col_3
       return piece
-    else
-      return nil
     end
   end
 
@@ -23,8 +31,6 @@ class Game
     diag_2 = layout["A"][:"1"] == piece && layout["B"][:"2"] == piece && layout["C"][:"3"] == piece
     if diag_1 || diag_2
       return piece
-    else
-      return nil
     end
   end
 end

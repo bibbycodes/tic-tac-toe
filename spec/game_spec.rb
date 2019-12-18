@@ -30,6 +30,30 @@ describe Game do
       'B' => { "1": '',  "2": '', "3": '' },
       'C' => { "1": '',  "2": '', "3": '' }
     }
+
+    @stalemate = {
+      'A' => { "1": 'X',  "2": 'O', "3": 'X' },
+      'B' => { "1": '0',  "2": 'X', "3": 'O' },
+      'C' => { "1": 'O',  "2": 'X', "3": 'O' }
+    }
+
+    @all_a_x = {
+      'A' => { "1": 'X',  "2": 'X', "3": 'X' },
+      'B' => { "1":  '',  "2": 'O', "3": '' },
+      'C' => { "1": 'O',  "2": '',  "3": 'O' }
+    }
+
+    @all_b_o = {
+      'A' => { "1": '',  "2": 'X', "3":  'O' },
+      'B' => { "1": 'O',  "2": 'O', "3": 'O' },
+      'C' => { "1": 'X',  "2": '',  "3": 'X' }
+    }
+
+    @all_col_1_o = {
+      'A' => { "1": 'O',  "2": '', "3": '' },
+      'B' => { "1": 'O',  "2": '', "3": '' },
+      'C' => { "1": 'O',  "2": '', "3": '' }
+    }
   end
   # let(:all_a_x) { double('Board', layout: @all_a_x) }
   # let(:all_a_o) { double('Board', layout: @all_a_o) }
@@ -40,12 +64,7 @@ describe Game do
   
   context '#check_rows' do
     it 'returns X if A1 - A3 is taken by X' do
-      all_a_x = {
-        'A' => { "1": 'X',  "2": 'X', "3": 'X' },
-        'B' => { "1":  '',  "2": 'O', "3": '' },
-        'C' => { "1": 'O',  "2": '',  "3": 'O' }
-      }
-      expect(@game.check_rows(all_a_x, "X")).to eq("X")
+      expect(@game.check_rows(@all_a_x, "X")).to eq("X")
     end
 
     it 'returns O if A1 - A3 is taken by O' do
@@ -67,12 +86,7 @@ describe Game do
     end
 
     it 'returns O if B1 - B3 is taken by O' do
-      all_b_o = {
-        'A' => { "1": '',  "2": 'X', "3":  'O' },
-        'B' => { "1": 'O',  "2": 'O', "3": 'O' },
-        'C' => { "1": 'X',  "2": '',  "3": 'X' }
-      }
-      expect(@game.check_rows(all_b_o, "O")).to eq("O")
+      expect(@game.check_rows(@all_b_o, "O")).to eq("O")
     end
 
     it 'returns X if C1 - C3 is taken by X' do
@@ -86,7 +100,9 @@ describe Game do
 
     it 'returns nil if C1 - C3 is not taken by either X or O' do
       expect(@game.check_rows(@empty_layout, "X")).to eq(nil)
+      expect(@game.check_rows(@stalemate, "O")).to eq(nil)
       expect(@game.check_rows(@empty_layout, "O")).to eq(nil)
+      expect(@game.check_rows(@stalemate, "X")).to eq(nil)
     end
   end
 
@@ -102,13 +118,7 @@ describe Game do
     end
 
     it "returns O if the first column has all O's" do
-      layout = {
-        'A' => { "1": 'O',  "2": '', "3": '' },
-        'B' => { "1": 'O',  "2": '', "3": '' },
-        'C' => { "1": 'O',  "2": '', "3": '' }
-      }
-
-      expect(@game.check_columns(layout, "O")).to eq("O")
+      expect(@game.check_columns(@all_col_1_o, "O")).to eq("O")
     end
 
     it "returns X if the second column has all X's" do
@@ -190,6 +200,21 @@ describe Game do
       expect(@game.check_diagonals(@empty_layout, "X")).to eq(nil)
     end
   end
+
+  context "#winner?" do
+    it "returns X if X is a winner" do
+      expect(@game.winner?(@all_a_x, "X")).to eq("X")
+      expect(@game.winner?(@all_b_o, "X")).to eq(nil)
+    end
+
+    it "returns O if O is a winner" do
+      expect(@game.winner?(@all_a_x, "O")).to eq(nil)
+      expect(@game.winner?(@all_b_o, "O")).to eq("O")
+    end
+
+    it "returns nil if there is no winner" do
+      expect(@game.winner?(@empty_layout, "O")).to eq(nil)
+      expect(@game.winner?(@stalemate, "O")).to eq(nil)
+    end
+  end
 end
-
-
