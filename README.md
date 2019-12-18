@@ -32,7 +32,8 @@ This means that you can place a piece on the board with the following syntax:
 @board["A"]["1"] = "X"
 ```
 
-The only challenge that this presented was that I had to convert column values to symbols in my 'add' method:
+The only challenge that this presented was that I had to convert column values to symbols in my 'add' method
+which takes in a piece (X or O) and a postion in the accepted formats of A1 and ["C", "3"]:
 
 ```ruby
 def add(piece, position)
