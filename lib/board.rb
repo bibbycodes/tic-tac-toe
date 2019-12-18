@@ -1,9 +1,15 @@
 class Board
+  def initialize
+    @A = {"1": "",  "2": "", "3": ""}
+    @B = {"1": "",  "2": "", "3": ""}
+    @C = {"1": "",  "2": "", "3": ""}
+    @board = [@A, @B, @C]
+  end
+
   def add(piece, position)
-    [
-    {"1": "X", "2": "", "3": ""}, 
-    {"1": "",  "2": "", "3": ""}, 
-    {"1": "",  "2": "", "3": ""}
-    ]
+    if position[0] == "A"
+      @A[position[1].to_sym] = piece
+    end
+    @board
   end
 end

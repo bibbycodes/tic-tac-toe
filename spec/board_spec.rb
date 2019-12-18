@@ -10,9 +10,25 @@ describe Board do
     @board = Board.new
   end
   context 'adding a piece' do
-    it 'should add an X to the board' do
-      expect(@board.add("X", ["A", "0"])).to eq([
+    it 'should add an X to the board at A 1' do
+      expect(@board.add("X", ["A", "1"])).to eq([
         {"1": "X", "2": "", "3": ""}, 
+        {"1": "",  "2": "", "3": ""}, 
+        {"1": "",  "2": "", "3": ""}
+      ]) 
+    end
+
+    it 'should add an O to the board at A 1' do
+      expect(@board.add("O", ["A", "1"])).to eq([
+        {"1": "O", "2": "", "3": ""}, 
+        {"1": "",  "2": "", "3": ""}, 
+        {"1": "",  "2": "", "3": ""}
+      ]) 
+    end
+
+    it 'should add an X to the board at A 2' do
+      expect(@board.add("X", ["A", "2"])).to eq([
+        {"1": "", "2": "X", "3": ""}, 
         {"1": "",  "2": "", "3": ""}, 
         {"1": "",  "2": "", "3": ""}
       ]) 
