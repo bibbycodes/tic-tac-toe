@@ -19,8 +19,9 @@ class Game
   end
 
   def check_diagonals(layout, piece)
-    diag_1 = layout["C"][:"1"] == piece &&  layout["B"][:"2"] == piece &&  layout["A"][:"3"] == piece
-    if diag_1
+    diag_1 = layout["C"][:"1"] == piece && layout["B"][:"2"] == piece && layout["A"][:"3"] == piece
+    diag_2 = layout["A"][:"1"] == piece && layout["B"][:"2"] == piece && layout["C"][:"3"] == piece
+    if diag_1 || diag_2
       return piece
     else
       return nil
