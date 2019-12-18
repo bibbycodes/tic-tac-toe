@@ -19,7 +19,7 @@ The next step was to implement the board class, as the next simplest part of the
 I decided to use a hash containing three hashes to map out a 3 x 3 board
 
 ```ruby
-@board = {
+@layout = {
   'A' => { "1": '',  "2": '', "3": '' },
   'B' => { "1": '',  "2": '', "3": '' },
   'C' => { "1": '',  "2": '', "3": '' }
@@ -29,7 +29,7 @@ I decided to use a hash containing three hashes to map out a 3 x 3 board
 This means that you can place a piece on the board with the following syntax:
 
 ```ruby
-@board["A"]["1"] = "X"
+@layout["A"]["1"] = "X"
 ```
 
 The only challenge that this presented was that I had to convert column values to symbols in my 'add' method
@@ -37,10 +37,10 @@ which takes in a piece (X or O) and a postion in the accepted formats of A1 or [
 
 ```ruby
 def add(piece, position)
-    row = position[0]
-    column = position[1].to_sym
-    @board[row][column] = piece
-    [@board['A'], @board['B'], @board['C']]
+  row = position[0]
+  column = position[1].to_sym
+  @layout[row][column] = piece
+  [@layout['A'], @layout['B'], @layout['C']]
 end
 ```
 
@@ -53,7 +53,7 @@ def validate_move(piece, position)
     "ABC".include?(position[0]) &&
     "123".include?(position[1]) && 
     "XO".include?(piece)        && 
-    @board[position[0]][position[1].to_sym] == ''
+    @layout[position[0]][position[1].to_sym] == ''
     )
 end
 ```
@@ -65,8 +65,8 @@ def add(piece, position)
   if validate_move(piece, position)
     row = position[0]
     column = position[1].to_sym
-    @board[row][column] = piece
-    [@board['A'], @board['B'], @board['C']]
+    @layout[row][column] = piece
+    [@layout['A'], @layout['B'], @layout['C']]
   else 
     return "Invalid Move"
   end
@@ -78,9 +78,9 @@ value in each hash was not an empty string:
 
 ```ruby
 def full?
-  a = @board['A'].values.all? {|x| x != ''}
-  b = @board['B'].values.all? {|x| x != ''}
-  c = @board['C'].values.all? {|x| x != ''}
+  a = @layout['A'].values.all? {|x| x != ''}
+  b = @layout['B'].values.all? {|x| x != ''}
+  c = @layout['C'].values.all? {|x| x != ''}
   return a && b && c
 end
 ```

@@ -20,3 +20,74 @@
 #     Checks Diagonals
 #     Checks Horizontals
 #     Checks Verticals
+require 'game'
+
+describe Game do
+  before(:each) do
+    @game = Game.new
+    @empty_layout = {
+      'A' => { "1": '',  "2": '', "3": '' },
+      'B' => { "1": '',  "2": '', "3": '' },
+      'C' => { "1": '',  "2": '', "3": '' }
+    }
+  end
+  # let(:all_a_x) { double('Board', layout: @all_a_x) }
+  # let(:all_a_o) { double('Board', layout: @all_a_o) }
+  # let(:all_b_x) { double('Board', layout: @all_b_x) }
+  # let(:all_b_o) { double('Board', layout: @all_b_o) }
+  # let(:all_c_x) { double('Board', layout: @all_c_x) }
+  # let(:empty_board)   { double('Board', layout: @empty_layout) }
+  
+  context '#check_rows' do
+    it 'returns X if A1 - A3 is taken by X' do
+      all_a_x = {
+        'A' => { "1": 'X',  "2": 'X', "3": 'X' },
+        'B' => { "1":  '',  "2": 'O', "3": '' },
+        'C' => { "1": 'O',  "2": '',  "3": 'O' }
+      }
+      expect(@game.check_rows(all_a_x)).to eq("X")
+    end
+
+    it 'returns O if A1 - A3 is taken by O' do
+      all_a_o = {
+        'A' => { "1": 'O',  "2": 'O', "3": 'O' },
+        'B' => { "1":  '',  "2": 'X', "3": '' },
+        'C' => { "1": 'X',  "2": '',  "3": 'X' }
+      }
+      expect(@game.check_rows(all_a_o)).to eq("O")
+    end
+
+    it 'returns X if B1 - B3 is taken by X' do
+      all_b_x = {
+        'A' => { "1": '',  "2": 'O', "3":  'O' },
+        'B' => { "1": 'X',  "2": 'X', "3": 'X' },
+        'C' => { "1": 'O',  "2": '',  "3": 'O' }
+      }
+      expect(@game.check_rows(all_b_x)).to eq("X")
+    end
+
+    it 'returns O if B1 - B3 is taken by O' do
+      all_b_o = {
+        'A' => { "1": '',  "2": 'X', "3":  'O' },
+        'B' => { "1": 'O',  "2": 'O', "3": 'O' },
+        'C' => { "1": 'X',  "2": '',  "3": 'X' }
+      }
+      expect(@game.check_rows(all_b_o)).to eq("O")
+    end
+
+    it 'returns X if C1 - C3 is taken by X' do
+      all_c_x = {
+        'A' => { "1": '',  "2": 'O', "3":  '' },
+        'B' => { "1": 'O',  "2": '',  "3": 'O' },
+        'C' => { "1": 'X',  "2": 'X', "3": 'X' }
+      }
+      expect(@game.check_rows(all_c_x)).to eq("X")
+    end
+
+    it 'returns nil if C1 - C3 is not taken by either X or O' do
+      expect(@game.check_rows(@empty_layout)).to eq(nil)
+    end
+  end
+end
+
+

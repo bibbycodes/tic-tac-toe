@@ -2,7 +2,7 @@
 
 class Board
   def initialize
-    @board = {
+    @layout = {
       'A' => { "1": '',  "2": '', "3": '' },
       'B' => { "1": '',  "2": '', "3": '' },
       'C' => { "1": '',  "2": '', "3": '' }
@@ -13,17 +13,17 @@ class Board
     if validate_move(piece, position)
       row = position[0]
       column = position[1].to_sym
-      @board[row][column] = piece
-      [@board['A'], @board['B'], @board['C']]
+      @layout[row][column] = piece
+      [@layout['A'], @layout['B'], @layout['C']]
     else 
       return "Invalid Move"
     end
   end
 
   def full?
-    a = @board['A'].values.all? {|x| x != ''}
-    b = @board['B'].values.all? {|x| x != ''}
-    c = @board['C'].values.all? {|x| x != ''}
+    a = @layout['A'].values.all? {|x| x != ''}
+    b = @layout['B'].values.all? {|x| x != ''}
+    c = @layout['C'].values.all? {|x| x != ''}
     return a && b && c
   end
 
@@ -34,7 +34,7 @@ class Board
       "ABC".include?(position[0]) &&
       "123".include?(position[1]) && 
       "XO".include?(piece)        && 
-      @board[position[0]][position[1].to_sym] == ''
+      @layout[position[0]][position[1].to_sym] == ''
       )
   end
 end
