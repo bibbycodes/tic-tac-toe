@@ -174,6 +174,21 @@ describe Game do
 
       expect(@game.check_diagonals(layout, "X")).to eq("X")
     end
+
+    it "returns O if all O's on diagonal from top left to bottom right" do
+      layout = {
+        'A' => { "1": 'O', "2": '',  "3": '' },
+        'B' => { "1": '',  "2": 'O', "3": '' },
+        'C' => { "1": '',  "2": '',  "3": 'O'}
+      }
+
+      expect(@game.check_diagonals(layout, "O")).to eq("O")
+    end
+
+    it "returns nil if niether of the diagonals have all X's or O's" do
+      expect(@game.check_diagonals(@empty_layout, "O")).to eq(nil)
+      expect(@game.check_diagonals(@empty_layout, "X")).to eq(nil)
+    end
   end
 end
 
