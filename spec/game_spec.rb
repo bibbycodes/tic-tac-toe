@@ -25,7 +25,7 @@ require 'game'
 
 describe Game do
   before(:each) do
-    @game = Game.new
+    # game = Game.new
     @empty_layout = {
       'A' => { "1": '',  "2": '', "3": '' },
       'B' => { "1": '',  "2": '', "3": '' },
@@ -88,30 +88,37 @@ describe Game do
 
   context '#check_rows' do
     it 'returns the players name if A1 - A3 is taken by X' do
-      expect(@game.check_rows(board_ax, player_x)).to eq('Robert')
+      game = Game.new(board_ax)
+      expect(game.check_rows(player_x)).to eq('Robert')
     end
 
     it 'returns The Players name if A1 - A3 is taken by O' do
-      expect(@game.check_rows(all_ao, player_o)).to eq('Joseph')
+      game = Game.new(all_ao)
+      expect(game.check_rows(player_o)).to eq('Joseph')
     end
 
     it 'returns the players name if B1 - B3 is taken by X' do
-      expect(@game.check_rows(all_bx, player_x)).to eq('Robert')
+      game = Game.new(all_bx)
+      expect(game.check_rows(player_x)).to eq('Robert')
     end
 
     it 'returns O if B1 - B3 is taken by O' do
-      expect(@game.check_rows(all_bo, player_o)).to eq('Joseph')
+      game = Game.new(all_bo)
+      expect(game.check_rows(player_o)).to eq('Joseph')
     end
 
     it 'returns the players name if C1 - C3 is taken by X' do
-      expect(@game.check_rows(all_cx, player_x)).to eq('Robert')
+      game = Game.new(all_cx)
+      expect(game.check_rows(player_x)).to eq('Robert')
     end
 
     it 'returns nil if C1 - C3 is not taken by either X or O' do
-      expect(@game.check_rows(empty_board, player_x)).to eq(nil)
-      expect(@game.check_rows(stalemate_board, player_o)).to eq(nil)
-      expect(@game.check_rows(empty_board, player_o)).to eq(nil)
-      expect(@game.check_rows(stalemate_board, player_x)).to eq(nil)
+      game_1 = Game.new(empty_board)
+      game_2 = Game.new(stalemate_board)
+      expect(game_1.check_rows(player_x)).to eq(nil)
+      expect(game_2.check_rows(player_o)).to eq(nil)
+      expect(game_1.check_rows(player_o)).to eq(nil)
+      expect(game_2.check_rows(player_x)).to eq(nil)
     end
   end
 
@@ -123,12 +130,14 @@ describe Game do
         'C' => { "1": 'X',  "2": '', "3": '' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_columns(board, player_x)).to eq('Robert')
+      game = Game.new(board)
+      expect(game.check_columns(player_x)).to eq('Robert')
     end
 
     it "returns O if the first column has all O's" do
       board = double('Board', layout: @all_col_1_o)
-      expect(@game.check_columns(board, player_o)).to eq('Joseph')
+      game = Game.new(board)
+      expect(game.check_columns(player_o)).to eq('Joseph')
     end
 
     it "returns the players name if the second column has all X's" do
@@ -138,7 +147,8 @@ describe Game do
         'C' => { "1": '',  "2": 'X', "3": '' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_columns(board, player_x)).to eq('Robert')
+      game = Game.new(board)
+      expect(game.check_columns(player_x)).to eq('Robert')
     end
 
     it "returns O if the third column has all O's" do
@@ -148,7 +158,8 @@ describe Game do
         'C' => { "1": '',  "2": '', "3": 'O' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_columns(board, player_o)).to eq('Joseph')
+      game = Game.new(board)
+      expect(game.check_columns(player_o)).to eq('Joseph')
     end
 
     it "returns nil if none of the columns have all X's or O's" do
@@ -158,9 +169,10 @@ describe Game do
         'C' => { "1": 'X', "2": 'O', "3": '' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_columns(board, player_o)).to eq(nil)
-      expect(@game.check_columns(board, player_x)).to eq(nil)
-      expect(@game.check_columns(empty_board, player_x)).to eq(nil)
+      game = Game.new(board)
+      expect(game.check_columns(player_o)).to eq(nil)
+      expect(game.check_columns(player_x)).to eq(nil)
+      expect(game.check_columns(player_x)).to eq(nil)
     end
   end
 
@@ -172,7 +184,8 @@ describe Game do
         'C' => { "1": 'X', "2": '',  "3": '' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_diagonals(board, player_x)).to eq('Robert')
+      game = Game.new(board)
+      expect(game.check_diagonals(player_x)).to eq('Robert')
     end
 
     it "returns O if all O's on diagonal from bottom left to top right" do
@@ -182,7 +195,8 @@ describe Game do
         'C' => { "1": 'O', "2": '',  "3": '' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_diagonals(board, player_o)).to eq('Joseph')
+      game = Game.new(board)
+      expect(game.check_diagonals(player_o)).to eq('Joseph')
     end
 
     it "returns the players name if all X's on diagonal from top left to bottom right" do
@@ -192,7 +206,8 @@ describe Game do
         'C' => { "1": '',  "2": '',  "3":  'X' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_diagonals(board, player_x)).to eq('Robert')
+      game = Game.new(board)
+      expect(game.check_diagonals(player_x)).to eq('Robert')
     end
 
     it "returns O if all O's on diagonal from top left to bottom right" do
@@ -202,29 +217,44 @@ describe Game do
         'C' => { "1": '',  "2": '',  "3": 'O' }
       }
       board = double('Board', layout: layout)
-      expect(@game.check_diagonals(board, player_o)).to eq('Joseph')
+      game = Game.new(board)
+      expect(game.check_diagonals(player_o)).to eq('Joseph')
     end
 
     it "returns nil if niether of the diagonals have all X's or O's" do
-      expect(@game.check_diagonals(empty_board, player_o)).to eq(nil)
-      expect(@game.check_diagonals(empty_board, player_x)).to eq(nil)
+      game = Game.new(empty_board)
+      expect(game.check_diagonals(player_o)).to eq(nil)
+      expect(game.check_diagonals(player_x)).to eq(nil)
     end
   end
 
   context '#winner?' do
-    it 'returns the players name if X is a winner' do
-      expect(@game.winner?(board_ax, player_x)).to eq('Robert')
-      expect(@game.winner?(board_ax, player_o)).to eq(nil)
-    end
-
-    it 'returns O if O is a winner' do
-      expect(@game.winner?(board_ax, player_o)).to eq(nil)
-      expect(@game.winner?(board_bo, player_o)).to eq('Joseph')
+    it 'returns the players name when O is the winner' do
+      game = Game.new(board_bo)
+      expect(game.winner?(player_o)).to eq("Joseph")
+      expect(game.winner?(player_x)).to eq(nil)
     end
 
     it 'returns nil if there is no winner' do
-      expect(@game.winner?(empty_board, player_o)).to eq(nil)
-      expect(@game.winner?(stalemate_board, player_o)).to eq(nil)
+      game_1 = Game.new(empty_board)
+      game_2 = Game.new(stalemate_board)
+      expect(game_1.winner?(player_o)).to eq(nil)
+      expect(game_2.winner?(player_o)).to eq(nil)
+    end
+  end
+
+  context '#over?' do
+    it 'returns true if the game is over after a player has won' do
+      game = Game.new(board_ax)
+      game.winner?(player_x)
+      allow(board_ax).to receive(:full?).and_return(false)
+      expect(game.over?).to eq(true)
+    end
+
+    it 'returns true if the game is over with a full board' do
+      game = Game.new(board_ax)
+      allow(board_ax).to receive(:full?).and_return(true)
+      expect(game.over?).to eq(true)
     end
   end
 end

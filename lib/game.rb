@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
 class Game
-  def winner?(board, player)
-    col = check_columns(board, player) == player.name
-    row = check_rows(board, player) == player.name
-    diag = check_diagonals(board, player) == player.name
-    return player.name if col || row || diag
+  def initialize(board)
+    @board = board
+    @winner = nil
   end
 
-  def check_rows(board, player)
-    layout = board.layout
+  def winner?(player)
+    col = check_columns(player) == player.name
+    row = check_rows(player) == player.name
+    diag = check_diagonals(player) == player.name
+    @winner = player.name if col || row || diag
+  end
+
+  def check_rows(player)
+    layout = @board.layout
     piece = player.piece
     if
       layout['A'].values.all? { |x| x == piece } ||
@@ -19,8 +24,8 @@ class Game
     end
   end
 
-  def check_columns(board, player)
-    layout = board.layout
+  def check_columns(player)
+    layout = @board.layout
     piece = player.piece
     col_1 = layout['A'][:"1"] == piece && layout['B'][:"1"] == piece && layout['C'][:"1"] == piece
     col_2 = layout['A'][:"2"] == piece && layout['B'][:"2"] == piece && layout['C'][:"2"] == piece
@@ -28,11 +33,15 @@ class Game
     return player.name if col_1 || col_2 || col_3
   end
 
-  def check_diagonals(board, player)
-    layout = board.layout
+  def check_diagonals(player)
+    layout = @board.layout
     piece = player.piece
     diag_1 = layout['C'][:"1"] == piece && layout['B'][:"2"] == piece && layout['A'][:"3"] == piece
     diag_2 = layout['A'][:"1"] == piece && layout['B'][:"2"] == piece && layout['C'][:"3"] == piece
     return player.name if diag_1 || diag_2
+  end
+
+  def over?()
+    return true if @board.full? || @winner
   end
 end
