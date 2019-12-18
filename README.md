@@ -49,11 +49,12 @@ be placed where a piece already exists:
 
 ```ruby
 def validate_move(piece, position)
-  return (  "ABC".include?(position[0]) &&
-            "123".include?(position[1]) && 
-            "XO".include?(piece) && 
-            @board[position[0]][position[1].to_sym] == ''
-          )
+  return (  
+    "ABC".include?(position[0]) &&
+    "123".include?(position[1]) && 
+    "XO".include?(piece)        && 
+    @board[position[0]][position[1].to_sym] == ''
+    )
 end
 ```
 
