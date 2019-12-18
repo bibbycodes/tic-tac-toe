@@ -58,40 +58,40 @@ describe Board do
       expect(@board.add('O', 'C3')).to eq([
                                             { "1": 'X', "2": '',  "3": '' },
                                             { "1": '',  "2": '',  "3": '' },
-                                            { "1": '',  "2": '',  "3": 'O'}
+                                            { "1": '',  "2": '',  "3": 'O' }
                                           ])
     end
 
     context 'validation' do
       it 'cannot add a piece to a spot that has been taken' do
-        @board.add("X", "A1")
-        expect(@board.add("X", "A1")).to eq("Invalid Move")
+        @board.add('X', 'A1')
+        expect(@board.add('X', 'A1')).to eq('Invalid Move')
       end
-  
+
       it 'cannot add a piece other than X or O' do
-        expect(@board.add("D", "A1")).to eq("Invalid Move")
+        expect(@board.add('D', 'A1')).to eq('Invalid Move')
       end
-  
+
       it 'cannot add a piece to a spot outside the board' do
-        expect(@board.add("X", "D4")).to eq("Invalid Move")
+        expect(@board.add('X', 'D4')).to eq('Invalid Move')
       end
     end
 
     context '#full?' do
       it 'returns true if the board is full' do
-        for i in 1..3
-          @board.add("X", "A#{i}")
-          @board.add("X", "B#{i}")
-          @board.add("X", "C#{i}")
+        (1..3).each do |i|
+          @board.add('X', "A#{i}")
+          @board.add('X', "B#{i}")
+          @board.add('X', "C#{i}")
         end
-      expect(@board.full?).to be(true)
+        expect(@board.full?).to be(true)
       end
 
       it 'returns false if the board is not full' do
-        for i in 1..3
-          @board.add("X", "A#{i}")
+        (1..3).each do |i|
+          @board.add('X', "A#{i}")
         end
-      expect(@board.full?).to be(false)
+        expect(@board.full?).to be(false)
       end
     end
   end
