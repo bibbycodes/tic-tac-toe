@@ -256,5 +256,17 @@ describe Game do
       allow(board_ax).to receive(:full?).and_return(true)
       expect(game.over?).to eq(true)
     end
+
+    it 'returns false if board is not full and no one has won' do
+      game = Game.new(empty_board)
+      allow(empty_board).to receive(:full?).and_return(false)
+      expect(game.over?).to eq(false)
+    end
+
+    it 'returns false in a stalemate' do
+      game = Game.new(stalemate_board)
+      allow(stalemate_board).to receive(:full?).and_return(false)
+      expect(game.over?).to eq(false)
+    end
   end
 end

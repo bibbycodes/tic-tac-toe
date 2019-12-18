@@ -42,6 +42,6 @@ class Game
   end
 
   def over?()
-    return true if @board.full? || @winner
+    @board.full? || @winner ? true : false
   end
 end
