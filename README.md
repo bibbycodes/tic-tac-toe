@@ -33,7 +33,7 @@ This means that you can place a piece on the board with the following syntax:
 ```
 
 The only challenge that this presented was that I had to convert column values to symbols in my 'add' method
-which takes in a piece (X or O) and a postion in the accepted formats of A1 and ["C", "3"]:
+which takes in a piece (X or O) and a postion in the accepted formats of A1 or ["A", "1"]:
 
 ```ruby
 def add(piece, position)
@@ -49,12 +49,11 @@ be placed where a piece already exists:
 
 ```ruby
 def validate_move(piece, position)
-  if ("ABC".include?(position[0]) && "123".include?(position[1]) && "XO".include?(piece))
-    if @board[position[0]][position[1].to_sym] == ''
-      return true
-    end
-  end
-  return "Invalid Move"
+  return (  "ABC".include?(position[0]) &&
+            "123".include?(position[1]) && 
+            "XO".include?(piece) && 
+            @board[position[0]][position[1].to_sym] == ''
+          )
 end
 ```
 
@@ -62,13 +61,13 @@ Below is the add function with input validation included:
 
 ```ruby
 def add(piece, position)
-  if validate_move(piece, position) == true
+  if validate_move(piece, position)
     row = position[0]
     column = position[1].to_sym
     @board[row][column] = piece
     [@board['A'], @board['B'], @board['C']]
   else 
-    return validate_move(piece, position)
+    return "Invalid Move"
   end
 end
 ```
