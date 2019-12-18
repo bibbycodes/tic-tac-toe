@@ -64,11 +64,15 @@ describe Board do
 
     it 'cannot add a piece to a spot that has been taken' do
       @board.add("X", "A1")
-      expect(@board.add("X", "A1")).to eq("Cannot add piece to a spot that has been taken")
+      expect(@board.add("X", "A1")).to eq("Invalid Move")
+    end
+
+    it 'cannot add a piece other than X or O' do
+      expect(@board.add("D", "A1")).to eq("Invalid Move")
     end
 
     it 'cannot add a piece to a spot outside the board' do
-      expect(@board.add("X", "D4")).to eq("Cannot add piece to a spot outside the board")
+      expect(@board.add("X", "D4")).to eq("Invalid Move")
     end
   end
 end
