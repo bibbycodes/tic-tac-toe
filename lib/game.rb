@@ -17,4 +17,13 @@ class Game
       return nil
     end
   end
+
+  def check_diagonals(layout, piece)
+    diag_1 = layout["C"][:"1"] == piece &&  layout["B"][:"2"] == piece &&  layout["A"][:"3"] == piece
+    if diag_1
+      return piece
+    else
+      return nil
+    end
+  end
 end
