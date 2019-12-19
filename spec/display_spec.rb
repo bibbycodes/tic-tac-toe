@@ -45,5 +45,17 @@ describe Display do
         ]
       )
     end
+
+    it "renders a stalemate board" do
+      expect(@display.show(stalemate_board)).to eq(
+        [
+          " X | O | X ",
+          '---+---+---',
+          " O | X | O ",
+          '---+---+---',
+          " O | X | O "
+        ]
+      )
+    end
   end
 end
