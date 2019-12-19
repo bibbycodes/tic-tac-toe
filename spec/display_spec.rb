@@ -57,5 +57,29 @@ describe Display do
         ]
       )
     end
+
+    it "renders a board with a win by X in row b" do
+      expect(@display.show(all_bx)).to eq(
+        [
+          "   | O | O ",
+          '---+---+---',
+          " X | X | X ",
+          '---+---+---',
+          " O |   | O "
+        ]
+      )
+    end
+
+    it "renders a board with a win by o in column 1" do
+      expect(@display.show(col_1_o)).to eq(
+        [
+          " O |   | X ",
+          '---+---+---',
+          " O | X |   ",
+          '---+---+---',
+          " O |   | X "
+        ]
+      )
+    end
   end
 end
