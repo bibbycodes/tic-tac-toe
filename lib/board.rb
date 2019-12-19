@@ -27,7 +27,7 @@ class Board
     a = @layout['A'].values.all? { |x| x != ' ' }
     b = @layout['B'].values.all? { |x| x != ' ' }
     c = @layout['C'].values.all? { |x| x != ' ' }
-    
+
     a && b && c
   end
 

@@ -27,9 +27,9 @@ describe Game do
   before(:each) do
     # game = Game.new
     @empty_layout = {
-      'A' => { "1": '',  "2": '', "3": '' },
-      'B' => { "1": '',  "2": '', "3": '' },
-      'C' => { "1": '',  "2": '', "3": '' }
+      'A' => { "1": ' ',  "2": ' ', "3": ' ' },
+      'B' => { "1": ' ',  "2": ' ', "3": ' ' },
+      'C' => { "1": ' ',  "2": ' ', "3": ' ' }
     }
 
     @stalemate_layout = {
@@ -38,66 +38,66 @@ describe Game do
       'C' => { "1": 'O',  "2": 'X', "3": 'O' }
     }
 
-    @all_a_x = {
+    @win_row_a_x = {
       'A' => { "1": 'X',  "2": 'X', "3": 'X' },
-      'B' => { "1": '',   "2": 'O', "3": '' },
-      'C' => { "1": 'O',  "2": '',  "3": 'O' }
+      'B' => { "1": ' ',  "2": 'O', "3": ' ' },
+      'C' => { "1": 'O',  "2": ' ', "3": 'O' }
     }
 
-    @all_a_o = {
-      'A' => { "1": 'O',  "2": 'O', "3": 'O' },
-      'B' => { "1": '',   "2": 'X', "3": '' },
-      'C' => { "1": 'X',  "2": '',  "3": 'X' }
+    @win_row_a_o = {
+      'A' => { "1": 'O', "2": 'O', "3": 'O' },
+      'B' => { "1": ' ', "2": 'X', "3": ' ' },
+      'C' => { "1": 'X', "2": ' ', "3": 'X' }
     }
 
-    @all_b_x = {
-      'A' => { "1": '',   "2": 'O', "3": 'O' },
-      'B' => { "1": 'X',  "2": 'X', "3": 'X' },
-      'C' => { "1": 'O',  "2": '',  "3": 'O' }
+    @win_row_b_x = {
+      'A' => { "1": ' ', "2": 'O', "3": 'O' },
+      'B' => { "1": 'X', "2": 'X', "3": 'X' },
+      'C' => { "1": 'O', "2": ' ', "3": 'O' }
     }
 
-    @all_b_o = {
-      'A' => { "1": '',   "2": 'X', "3": 'O' },
+    @win_row_b_o = {
+      'A' => { "1": ' ',  "2": 'X', "3": 'O' },
       'B' => { "1": 'O',  "2": 'O', "3": 'O' },
-      'C' => { "1": 'X',  "2": '',  "3": 'X' }
+      'C' => { "1": 'X',  "2": ' ', "3": 'X' }
     }
 
-    @all_col_1_o = {
-      'A' => { "1": 'O',  "2": '', "3": '' },
-      'B' => { "1": 'O',  "2": '', "3": '' },
-      'C' => { "1": 'O',  "2": '', "3": '' }
+    @win_col_1_o = {
+      'A' => { "1": 'O',  "2": ' ', "3": ' ' },
+      'B' => { "1": 'O',  "2": ' ', "3": ' ' },
+      'C' => { "1": 'O',  "2": ' ', "3": ' ' }
     }
 
-    @all_c_x = {
-      'A' => { "1": '',   "2": 'O', "3":  '' },
-      'B' => { "1": 'O',  "2": '',  "3": 'O' },
+    @win_ro_c_o = {
+      'A' => { "1": ' ',  "2": 'O', "3": ' ' },
+      'B' => { "1": 'O',  "2": ' ', "3": 'O' },
       'C' => { "1": 'X',  "2": 'X', "3": 'X' }
     }
   end
 
   let(:player_x) { double('Player', name: 'Robert', piece: 'X') }
   let(:player_o) { double('Player', name: 'Joseph', piece: 'O') }
-  let(:all_ao) { double('Board', layout: @all_a_o) }
-  let(:all_bx) { double('Board', layout: @all_b_x) }
-  let(:all_bo) { double('Board', layout: @all_b_o) }
-  let(:all_cx) { double('Board', layout: @all_c_x) }
+  let(:all_ao) { double('Board', layout: @win_row_a_o) }
+  let(:all_bx) { double('Board', layout: @win_row_b_x) }
+  let(:all_bo) { double('Board', layout: @win_row_b_o) }
+  let(:all_cx) { double('Board', layout: @win_ro_c_o) }
   let(:empty_board) { double('Board', layout: @empty_layout) }
   let(:stalemate_board) { double('Board', layout: @stalemate_layout) }
-  let(:board_ax) { double('Board', layout: @all_a_x) }
-  let(:board_bo) { double('Board', layout: @all_b_o) }
+  let(:board_ax) { double('Board', layout: @win_row_a_x) }
+  let(:board_bo) { double('Board', layout: @win_row_b_o) }
 
   context '#check_rows' do
-    it 'returns the players name if A1 - A3 is taken by X' do
+    it 'returns the players name if A1 - A3 is taken by his piece(X)' do
       game = Game.new(board_ax, player_x, player_o)
       expect(game.check_rows(player_x)).to eq('Robert')
     end
 
-    it 'returns The Players name if A1 - A3 is taken by O' do
+    it 'returns the players name if A1 - A3 is taken by his piece(O)' do
       game = Game.new(all_ao, player_x, player_o)
       expect(game.check_rows(player_o)).to eq('Joseph')
     end
 
-    it 'returns the players name if B1 - B3 is taken by X' do
+    it 'returns the players name if B1 - B3 is taken by his piece' do
       game = Game.new(all_bx, player_x, player_o)
       expect(game.check_rows(player_x)).to eq('Robert')
     end
@@ -125,9 +125,9 @@ describe Game do
   context '#check_columns' do
     it "returns the players name if the first column has all X's" do
       layout = {
-        'A' => { "1": 'X',  "2": '', "3": '' },
-        'B' => { "1": 'X',  "2": '', "3": '' },
-        'C' => { "1": 'X',  "2": '', "3": '' }
+        'A' => { "1": 'X',  "2": ' ', "3": ' ' },
+        'B' => { "1": 'X',  "2": ' ', "3": ' ' },
+        'C' => { "1": 'X',  "2": ' ', "3": ' ' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
@@ -135,16 +135,16 @@ describe Game do
     end
 
     it "returns O if the first column has all O's" do
-      board = double('Board', layout: @all_col_1_o)
+      board = double('Board', layout: @win_col_1_o)
       game = Game.new(board, player_x, player_o)
       expect(game.check_columns(player_o)).to eq('Joseph')
     end
 
     it "returns the players name if the second column has all X's" do
       layout = {
-        'A' => { "1": '',  "2": 'X', "3": '' },
-        'B' => { "1": '',  "2": 'X', "3": '' },
-        'C' => { "1": '',  "2": 'X', "3": '' }
+        'A' => { "1": ' ',  "2": 'X', "3": ' ' },
+        'B' => { "1": ' ',  "2": 'X', "3": ' ' },
+        'C' => { "1": ' ',  "2": 'X', "3": ' ' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
@@ -153,9 +153,9 @@ describe Game do
 
     it "returns O if the third column has all O's" do
       layout = {
-        'A' => { "1": '',  "2": '', "3": 'O' },
-        'B' => { "1": '',  "2": '', "3": 'O' },
-        'C' => { "1": '',  "2": '', "3": 'O' }
+        'A' => { "1": ' ',  "2": ' ', "3": 'O' },
+        'B' => { "1": ' ',  "2": ' ', "3": 'O' },
+        'C' => { "1": ' ',  "2": ' ', "3": 'O' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
@@ -164,9 +164,9 @@ describe Game do
 
     it "returns nil if none of the columns have all X's or O's" do
       layout = {
-        'A' => { "1": 'O', "2": '',  "3": 'X' },
-        'B' => { "1": '',  "2": 'X', "3": 'O' },
-        'C' => { "1": 'X', "2": 'O', "3": ''  }
+        'A' => { "1": 'O', "2": ' ', "3": 'X' },
+        'B' => { "1": ' ', "2": 'X', "3": 'O' },
+        'C' => { "1": 'X', "2": 'O', "3": ' ' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
@@ -177,44 +177,44 @@ describe Game do
   end
 
   context '#check_diagonals' do
-    it "returns the players name if all X's on diagonal from bottom left to top right" do
+    it "returns the player's name when he has X's on the diagonal from bottom left to top right" do
       layout = {
-        'A' => { "1": '',  "2": '',  "3": 'X' },
-        'B' => { "1": '',  "2": 'X', "3": ''  },
-        'C' => { "1": 'X', "2": '',  "3": ''  }
+        'A' => { "1": ' ', "2": ' ', "3": 'X' },
+        'B' => { "1": ' ', "2": 'X', "3": ' ' },
+        'C' => { "1": 'X', "2": ' ', "3": ' ' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
       expect(game.check_diagonals(player_x)).to eq('Robert')
     end
 
-    it "returns O if all O's on diagonal from bottom left to top right" do
+    it "returns the player's name when he has O's on the diagonal from bottom left to top right" do
       layout = {
-        'A' => { "1": '',  "2": '',  "3": 'O' },
-        'B' => { "1": '',  "2": 'O', "3": ''  },
-        'C' => { "1": 'O', "2": '',  "3": ''  }
+        'A' => { "1": ' ', "2": ' ', "3": 'O' },
+        'B' => { "1": ' ', "2": 'O', "3": ' ' },
+        'C' => { "1": 'O', "2": ' ', "3": ' ' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
       expect(game.check_diagonals(player_o)).to eq('Joseph')
     end
 
-    it "returns the players name if all X's on diagonal from top left to bottom right" do
+    it "returns the player's name when he has all X's on the diagonal from top left to bottom right" do
       layout = {
-        'A' => { "1": 'X', "2": '',  "3": '' },
-        'B' => { "1": '',  "2": 'X', "3": '' },
-        'C' => { "1": '',  "2": '',  "3":  'X' }
+        'A' => { "1": 'X', "2": ' ', "3": ' ' },
+        'B' => { "1": ' ', "2": 'X', "3": ' ' },
+        'C' => { "1": ' ', "2": ' ', "3": 'X' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
       expect(game.check_diagonals(player_x)).to eq('Robert')
     end
 
-    it "returns O if all O's on diagonal from top left to bottom right" do
+    it "returns the player's name when he has O's on the diagonal from top left to bottom right" do
       layout = {
-        'A' => { "1": 'O', "2": '',  "3": '' },
-        'B' => { "1": '',  "2": 'O', "3": '' },
-        'C' => { "1": '',  "2": '',  "3": 'O' }
+        'A' => { "1": 'O', "2": ' ', "3": ' ' },
+        'B' => { "1": ' ', "2": 'O', "3": ' ' },
+        'C' => { "1": ' ', "2": ' ', "3": 'O' }
       }
       board = double('Board', layout: layout)
       game = Game.new(board, player_x, player_o)
@@ -229,9 +229,9 @@ describe Game do
   end
 
   context '#winner?' do
-    it 'returns the players name when O is the winner' do
+    it 'returns the players name when he is the winner' do
       game = Game.new(board_bo, player_x, player_o)
-      expect(game.winner?(player_o)).to eq("Joseph")
+      expect(game.winner?(player_o)).to eq('Joseph')
       expect(game.winner?(player_x)).to eq(nil)
     end
 
@@ -271,12 +271,12 @@ describe Game do
   end
 
   context '#switch_turns' do
-    it "switches players" do
+    it 'switches players' do
       game = Game.new(empty_board, player_x, player_o)
       expect(game.switch_turns).to eq(player_o)
     end
 
-    it "switches players" do
+    it 'switches players back and forth' do
       game = Game.new(empty_board, player_o, player_x)
       expect(game.switch_turns).to eq(player_x)
       expect(game.switch_turns).to eq(player_o)

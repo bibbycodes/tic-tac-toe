@@ -44,11 +44,11 @@ class Game
     return player.name if diaganol_axes_1_win || diaganol_axes_2_win
   end
 
-  def over?()
+  def over?
     @board.full? || @winner ? true : false
   end
 
-  def switch_turns()
+  def switch_turns
     @current_player == @player1 ? @current_player = @player2 : @current_player = @player1
   end
 end
