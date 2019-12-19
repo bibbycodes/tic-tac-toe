@@ -32,7 +32,7 @@ This means that you can place a piece on the board with the following syntax:
 @layout["A"]["1"] = "X"
 ```
 
-The only challenge that this presented was that I had to convert column values to symbols in my 'add' method
+A challenge I faced was that I having to convert column values to symbols in my 'add' method
 which takes in a piece (X or O) and a postion in the accepted formats of A1 or ["A", "1"]:
 
 ```ruby
@@ -45,7 +45,7 @@ end
 ```
 
 After this I added some methods to Validate the input. A move must land on the 3x3 grid and a piece cannot
-be placed where a piece already exists:
+be placed where a piece already exists. A piece must be either a X or a O:
 
 ```ruby
 def validate_move(piece, position)
@@ -64,7 +64,7 @@ Below is the add function with input validation included:
 def add(piece, position)
   if validate_move(piece, position)
     row = position[0]
-    column = position[1].to_sym
+    column = position[1]
     @layout[row][column] = piece
     [@layout['A'], @layout['B'], @layout['C']]
   else 
@@ -74,7 +74,7 @@ end
 ```
 
 Lastly I added a method to check if the board is full. I used the values.all? method to check if each
-value in each hash was not an empty string:
+value in each hash was not equal to " ":
 
 ```ruby
 def full?
