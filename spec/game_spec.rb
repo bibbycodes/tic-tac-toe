@@ -68,7 +68,7 @@ describe Game do
       'C' => { "1": 'O',  "2": ' ', "3": ' ' }
     }
 
-    @win_ro_c_o = {
+    @win_row_c_o = {
       'A' => { "1": ' ',  "2": 'O', "3": ' ' },
       'B' => { "1": 'O',  "2": ' ', "3": 'O' },
       'C' => { "1": 'X',  "2": 'X', "3": 'X' }
@@ -80,7 +80,7 @@ describe Game do
   let(:all_ao) { double('Board', layout: @win_row_a_o) }
   let(:all_bx) { double('Board', layout: @win_row_b_x) }
   let(:all_bo) { double('Board', layout: @win_row_b_o) }
-  let(:all_cx) { double('Board', layout: @win_ro_c_o) }
+  let(:all_cx) { double('Board', layout: @win_row_c_o) }
   let(:empty_board) { double('Board', layout: @empty_layout) }
   let(:stalemate_board) { double('Board', layout: @stalemate_layout) }
   let(:board_ax) { double('Board', layout: @win_row_a_x) }
