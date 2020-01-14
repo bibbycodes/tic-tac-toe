@@ -32,7 +32,7 @@ This means that you can place a piece on the board with the following syntax:
 @layout["A"]["1"] = "X"
 ```
 
-A challenge I faced was that I having to convert column values to symbols in my 'add' method
+A challenge I faced was that having to convert column values to symbols in my 'add' method
 which takes in a piece (X or O) and a postion in the accepted formats of A1 or ["A", "1"]:
 
 ```ruby
