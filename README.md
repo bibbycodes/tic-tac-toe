@@ -7,7 +7,7 @@ This challenge was completed through the use of OOP principles and the TDD metho
 ## Usage
 
 First, Clone this repo!
-Then Simply run the follwowing command in the command line:
+Then Simply run the following command in the command line:
 
 `ruby sample_script.rb`
 
